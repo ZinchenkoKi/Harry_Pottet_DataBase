@@ -3,6 +3,7 @@ using System;
 using HP_DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HPDataBase.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230106105453_schoolq")]
+    partial class schoolq
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,8 +62,6 @@ namespace HPDataBase.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ShoolNames");
 
                     b.ToTable("Faculties");
                 });
@@ -138,17 +139,6 @@ namespace HPDataBase.Migrations
                     b.ToTable("Wands");
                 });
 
-            modelBuilder.Entity("HP_DataBase.Entity.Faculty", b =>
-                {
-                    b.HasOne("HP_DataBase.Entity.School", "School")
-                        .WithMany("Faculties")
-                        .HasForeignKey("ShoolNames")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("School");
-                });
-
             modelBuilder.Entity("HP_DataBase.Entity.Person", b =>
                 {
                     b.HasOne("HP_DataBase.Entity.EducationObjekt", null)
@@ -183,11 +173,6 @@ namespace HPDataBase.Migrations
             modelBuilder.Entity("HP_DataBase.Entity.Person", b =>
                 {
                     b.Navigation("Wand");
-                });
-
-            modelBuilder.Entity("HP_DataBase.Entity.School", b =>
-                {
-                    b.Navigation("Faculties");
                 });
 #pragma warning restore 612, 618
         }
